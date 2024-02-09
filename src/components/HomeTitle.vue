@@ -9,11 +9,10 @@ defineProps({
 
 <template>
   <div class="greetings">
-    <h1 class="green">{{ msg }}</h1>
+    <h1 class="blue">{{ msg }}</h1>
     <h3>
-      You’ve successfully created a project with
-      <a href="https://vitejs.dev/" target="_blank" rel="noopener">Vite</a> +
-      <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue 3</a>.
+      The official research data provider for the
+      <a href="https://vitejs.dev/" target="_blank" rel="noopener">RevMetrix</a> project
     </h3>
   </div>
 </template>
@@ -27,6 +26,7 @@ h1 {
 }
 
 h3 {
+  text-align:  center !important;
   font-size: 1.2rem;
 }
 
