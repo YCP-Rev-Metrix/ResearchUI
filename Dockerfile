@@ -1,8 +1,8 @@
-FROM ubuntu:18.13.0
-LABEL authors="Liz Mains, Rob Wood"
-
 # Use a node image as the base image
 FROM node:latest
+
+# list authors
+LABEL authors="Liz Mains, Rob Wood"
 
 # Set the working directory inside the container
 WORKDIR /app
