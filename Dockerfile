@@ -20,8 +20,8 @@ COPY . .
 # Build the project for production
 RUN npm run build
 
-# Expose port 8081 (port that vite server runs on)
+# Expose port 8081 (port that http server runs on)
 EXPOSE 8081
 
 # Command to start the Vite server
-CMD ["http-server", "dist", "--cors"]
+CMD ["http-server", "dist", "--cors", "-p", "8081"]
