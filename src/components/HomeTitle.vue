@@ -12,7 +12,7 @@ defineProps({
     <h1 class="blue">{{ msg }}</h1>
     <h3>
       The official research data provider for the
-      <a href="https://vitejs.dev/" target="_blank" rel="noopener">RevMetrix</a> project
+      <a href="https://github.com/YCP-Rev-Metrix/" target="_blank" rel="noopener">RevMetrix</a> project's research data
     </h3>
   </div>
 </template>
@@ -20,9 +20,10 @@ defineProps({
 <style scoped>
 h1 {
   font-weight: 500;
-  font-size: 2.6rem;
+  font-size: 3.0rem;
   position: relative;
   top: -10px;
+  text-align: center !important;
 }
 
 h3 {
