@@ -1,16 +1,33 @@
+<script setup>
+import SearchForm from '../components/SearchForm.vue'
+</script>
+
 <template>
-  <div class="about">
-    <h1>This will be the main search page</h1>
-    <p>Here, we will implement a search bar (we'll go over options, but it may be most efficient to make a form that the user fills out using dropdown options and submits to grab specified data).</p>
+  <div class="searchPage">
+    <h1>Records Request</h1>
+    <p>Please fill out the form below to send a records request to the RevMetrix Research database:</p>
+    <SearchForm></SearchForm>
   </div>
 </template>
 
 <style>
 @media (min-width: 1024px) {
-  .about {
+  .searchPage {
+    padding-top: 30%;
+    margin-left: 1%;
     min-height: 100vh;
-    display: flex;
+    display: inline-block;
     align-items: center;
+  }
+  .searchPage h1 {
+    width: 50%;
+    margin: auto;
+    color: rgb(78,113,170);
+  }
+  .searchPage p {
+    width: 80%;
+    margin: 3% auto auto;
+    color: white;
   }
 }
 </style>
