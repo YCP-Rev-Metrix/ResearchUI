@@ -1,69 +1,98 @@
-<script setup>
+<script setup lang="ts">
+import {reactive, ref} from "vue";
+import Datepicker from "vue3-datepicker"
 
+const picked = ref(new Date())
+const from = ref(new Date(1692147660000))
+const to = ref(new Date())
+
+const field1 = ref()
+const field2 = ref()
+const field3 = ref()
+const field5 = ref()
+
+const options1 = [
+  {value: null, text: 'Please select an option'},
+  {value: 1, text: 'ddx'},
+  {value: 2, text: 'ddy'},
+  {value: 3, text: 'ddz'},
+  {value: 4, text: 'speed'},
+  {value: 5, text: 'All'},
+]
+const options2 = [
+  {value: null, text: 'Please select an option'},
+  {value: 1, text: 'Game 1'},
+  {value: 2, text: 'Game 2'},
+  {value: 3, text: 'Game 3'},
+  {value: 4, text: 'Game 4'},
+  {value: 5, text: 'Game 5'},
+]
+const options3 = [
+  {value: null, text: 'Please select an option'},
+  {value: 0, text: 'No'},
+  {value: 1, text: 'Yes'}
+]
+const options5 = [
+  {value: null, text: 'Please select an option'},
+  {value: 1, text: 'Will be populated with list of all RevMetrix users'}
+]
+
+const form = reactive({
+  ShotData: null,
+  GameNumber: null,
+  Session: null,
+  Date: new Date(),
+  Bowler: null
+})
+
+const show = ref(true)
+
+const onSubmit = (event) => {
+  event.preventDefault()
+  alert(JSON.stringify(form))
+}
 </script>
 
 <template>
   <div class="page">
-    <form id="dataRequest" class="needs-validation" novalidate>
-      <div class="mb-3 inputLine">
-        <span class="input-group-text namePiece">FROM</span>
-        <select class="form-select dropStyle" id="dropdownValidation1" required>
-          <option selected>Choose</option>
-          <option value="1">Populate dropdown with tables</option>
-          <option value="2">Users</option>
-        </select>
-        <div class="invalid-feedback">
-          Please select a valid option
-        </div>
-      </div>
-      <div class="mb-3 inputLine">
-        <span class="input-group-text namePiece">SELECT</span>
-        <select class="form-select dropStyle" id="dropdownValidation2" required>
-          <option selected>Choose</option>
-          <option value="1">*</option>
-          <option value="2">Populate dropdown with columns from selected table</option>
-          <option value="3">User_ID</option>
-        </select>
-        <div class="invalid-feedback">
-          Please select a valid option
-        </div>
-      </div>
-      <div class="mb-3 inputLine">
-        <span class="input-group-text namePiece">WHERE</span>
-        <select class="form-select dropStyle" id="dropdownValidation3" required>
-          <option selected>Choose</option>
-          <option value="1">None</option>
-          <option value="2">Populate dropdown with column names</option>
-        </select>
-        <div class="invalid-feedback">
-          Please select a valid option
-        </div>
-      </div>
-      <div class="mb-3 inputLine">
-        <span class="input-group-text namePiece">ORDER BY</span>
-        <select class="form-select dropStyle" id="dropdownValidation4" required>
-          <option selected>Choose</option>
-          <option value="1">None</option>
-          <option value="2">Populate dropdown with column names</option>
-          <option value="3">Username</option>
-        </select>
-        <div class="invalid-feedback">
-          Please select a valid option
-        </div>
-      </div>
-      <div class="mb-3 inputLine">
-        <span class="input-group-text namePiece">ASC | DESC</span>
-        <select class="form-select dropStyle" id="dropdownValidation5" required>
-          <option selected>Choose</option>
-          <option value="1">None</option>
-          <option value="2">Ascending</option>
-          <option value="3">Descending</option>
-        </select>
-        <div class="invalid-feedback">
-          Please select a valid option
-        </div>
-      </div>
-      <button type="submit" form="dataRequest" value="Submit" class="btn btn-primary btn-sm">Submit</button>
+    <form @submit="onSubmit" v-if="show">
+      <BInputGroup class="mt-3">
+        <template #prepend>
+          <BInputGroupText><strong class="text-primary inputGrpPre">Shot Data: </strong></BInputGroupText>
+        </template>
+        <BFormSelect v-model="form.ShotData" :options="options1" size="sm" class="mt-lg dropStyle" />
+      </BInputGroup>
+      <BInputGroup class="mt-3">
+        <template #prepend>
+          <BInputGroupText><strong class="text-primary inputGrpPre">Game:  </strong></BInputGroupText>
+        </template>
+        <BFormSelect v-model="form.GameNumber" :options="options2" size="sm" class="mt-lg dropStyle" />
+      </BInputGroup>
+      <BInputGroup class="mt-3">
+        <template #prepend>
+          <BInputGroupText><strong class="text-primary inputGrpPre">Session? </strong></BInputGroupText>
+        </template>
+        <BFormSelect v-model="form.Session" :options="options3" size="sm" class="mt-lg dropStyle" />
+      </BInputGroup>
+      <BInputGroup class="mt-3">
+        <template #prepend>
+          <BInputGroupText><strong class="text-primary inputGrpPre">Date: </strong></BInputGroupText>
+        </template>
+        <datepicker
+            v-model="form.Date"
+            :upper-limit="to"
+            :lower-limit="from"
+            :clearable="true"
+            class="dateInput">
+        </datepicker>
+      </BInputGroup>
+      <BInputGroup class="mt-3">
+        <template #prepend>
+          <BInputGroupText><strong class="text-primary inputGrpPre">Bowler: </strong></BInputGroupText>
+        </template>
+        <BFormSelect v-model="form.Bowler" :options="options5" size="sm" class="mt-lg dropStyle" />
+      </BInputGroup>
+      <BButton type="submit" style="margin-top:2%;" variant="success">Button</BButton>
     </form>
   </div>
 </template>
@@ -71,24 +100,24 @@
 <style>
 .page {
   width: 80%;
-  margin: 5% auto auto;
+  margin: 2% auto auto;
 }
-.inputLine {
-  display: flex;
-  margin-bottom: 2%;
-}
-.inputLine span {
-  display: flex;
-  justify-content: center;
-  background: white;
-  color: rgb(78,113,170);
-  font-weight: bold;
-  width: 30%;
+.inputGrpPre {
+  background: whitesmoke !important;
+  color: rgb(78,113,170) !important;
+  font-weight: bold !important;
 }
 .dropStyle {
-  width: 80%;
-  color: rgb(78,113,170);
-  font-weight: bold;
+  color: rgb(78,113,170) !important;
+  font-weight: bold !important;
+  background: whitesmoke;
+}
+.dateInput {
+  color: rgb(78,113,170) !important;
+  font-weight: bold !important;
+  background: whitesmoke;
+  text-decoration-color: #0a3622;
+  border: 0;
 }
 </style>
 

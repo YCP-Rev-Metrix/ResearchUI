@@ -13,7 +13,7 @@ import SearchForm from '../components/SearchForm.vue'
 <style>
 @media (min-width: 1024px) {
   .searchPage {
-    padding-top: 30%;
+    padding-top: 20%;
     margin-left: 1%;
     min-height: 100vh;
     display: inline-block;
