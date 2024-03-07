@@ -4,7 +4,7 @@ import FormResults from '../components/FormResults.vue'
 
 <template>
   <div class="resultsPage">
-    <h1>Results:</h1>
+    <h1>Results</h1>
     <p>Below is the data corresponding with your request:</p>
     <FormResults></FormResults>
   </div>
@@ -12,7 +12,7 @@ import FormResults from '../components/FormResults.vue'
 
 <style>
 @media (min-width: 1024px) {
-  .searchPage {
+  .resultsPage {
     padding-top: 20%;
     margin-left: 1%;
     min-height: 100vh;
@@ -20,7 +20,7 @@ import FormResults from '../components/FormResults.vue'
     align-items: center;
   }
   .resultsPage h1 {
-    width: 100%;
+    width: 50%;
     margin: auto;
     color: rgb(78,113,170);
   }

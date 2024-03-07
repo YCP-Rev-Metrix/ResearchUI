@@ -23,7 +23,7 @@ onMounted(() => {
 
 <template>
   <div class="page">
-    <h1>Form Results</h1>
+    <h2>Form Results</h2>
     <pre>{{ formResults }}</pre>
   </div>
 </template>
