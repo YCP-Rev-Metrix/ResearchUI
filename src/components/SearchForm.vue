@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {reactive, ref} from "vue";
 import Datepicker from "vue3-datepicker"
+import { useRouter } from 'vue-router';
 
 const picked = ref(new Date())
 const from = ref(new Date(1692147660000))
@@ -47,10 +48,25 @@ const form = reactive({
 
 const show = ref(true)
 
+const router = useRouter();
+
 const onSubmit = (event) => {
-  event.preventDefault()
-  alert(JSON.stringify(form))
+  event.preventDefault();
+  alert(JSON.stringify(form));
+
+  // Navigate to the result page with the form data
+  router.push({
+    name: 'result',
+    params: { form: JSON.stringify(form) },
+  });
 }
+// const onSubmit = (event) => {
+//   event.preventDefault()
+//
+//
+//   // alert(JSON.stringify(form))
+//   // window.location.href = 'https://api.revmetrix.io/api/Test/TestTime'
+// }
 </script>
 
 <template>

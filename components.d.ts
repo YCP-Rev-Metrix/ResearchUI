@@ -7,13 +7,11 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    BAlert: typeof import('bootstrap-vue-next')['BAlert']
-    BBadge: typeof import('bootstrap-vue-next')['BBadge']
     BButton: typeof import('bootstrap-vue-next')['BButton']
-    BFormInput: typeof import('bootstrap-vue-next')['BFormInput']
     BFormSelect: typeof import('bootstrap-vue-next')['BFormSelect']
     BInputGroup: typeof import('bootstrap-vue-next')['BInputGroup']
     BInputGroupText: typeof import('bootstrap-vue-next')['BInputGroupText']
+    FormResults: typeof import('./src/components/FormResults.vue')['default']
     HomeTitle: typeof import('./src/components/HomeTitle.vue')['default']
     IconCommunity: typeof import('./src/components/icons/IconCommunity.vue')['default']
     IconDocumentation: typeof import('./src/components/icons/IconDocumentation.vue')['default']
