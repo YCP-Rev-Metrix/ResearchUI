@@ -20,12 +20,11 @@ import FormResults from '../components/FormResults.vue'
     align-items: center;
   }
   .resultsPage h1 {
-    width: 50%;
-    margin: auto;
+    width: 100%;
     color: rgb(78,113,170);
   }
   .resultsPage p {
-    width: 80%;
+    width: 100%;
     margin: 3% auto auto;
     color: white;
   }

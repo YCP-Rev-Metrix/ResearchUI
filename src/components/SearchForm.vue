@@ -1,96 +1,123 @@
 <script setup lang="ts">
-import {reactive, ref} from "vue";
+// imports for vue functions, router, and datepicker package
+import {reactive, ref, nextTick} from "vue";
 import Datepicker from "vue3-datepicker"
 import { useRouter } from 'vue-router';
 
-const picked = ref(new Date())
-const from = ref(new Date(1692147660000))
-const to = ref(new Date())
+// Define state for validation messages
+const actorError = ref('');
+const conditionError = ref('');
+const dateError = ref('');
+const actorGood = ref('');
+const conditionGood = ref('');
+const dateGood = ref('');
 
-const field1 = ref()
-const field2 = ref()
-const field3 = ref()
-const field5 = ref()
+// datepicker values
+const picked = ref(new Date()) // current date
+const from = ref(new Date(1692147660000)) // starting Point of 8/5/2023
+const to = ref(new Date()) // end point of current date
 
-const options1 = [
+// form field options
+const actorOptions = [
   {value: null, text: 'Please select an option'},
-  {value: 1, text: 'ddx'},
-  {value: 2, text: 'ddy'},
-  {value: 3, text: 'ddz'},
-  {value: 4, text: 'speed'},
-  {value: 5, text: 'All'},
+  {value: 1, text: 'First Shots'},
+  {value: 2, text: 'Pocket Hits'}
 ]
-const options2 = [
+const conditionOptions = [
   {value: null, text: 'Please select an option'},
-  {value: 1, text: 'Game 1'},
-  {value: 2, text: 'Game 2'},
-  {value: 3, text: 'Game 3'},
-  {value: 4, text: 'Game 4'},
-  {value: 5, text: 'Game 5'},
-]
-const options3 = [
-  {value: null, text: 'Please select an option'},
-  {value: 0, text: 'No'},
-  {value: 1, text: 'Yes'}
-]
-const options5 = [
-  {value: null, text: 'Please select an option'},
-  {value: 1, text: 'Will be populated with list of all RevMetrix users'}
+  {value: 1, text: 'Hit the pocket'},
+  {value: 2, text: 'Resulted in Strikes'},
+  {value: 3, text: 'Resulted in one remaining pin of pins 4, 7, 8, 9 & 10'}
 ]
 
+// reactive variable for storing values in fields of the form
 const form = reactive({
-  ShotData: null,
-  GameNumber: null,
-  Session: null,
-  Date: new Date(),
-  Bowler: null
+  Actor: null,
+  Condition: null,
+  OptionalDate: false,
+  Date: null
 })
+const show = ref(true) // create reactive ref object for use in form
+const router = useRouter(); // router variable for use in navigating to next page on form submission
 
-const show = ref(true)
+const validateForm = () => {
+  let isValid = true;
 
-const router = useRouter();
+  // Validate Actor
+  if (!form.Actor) {
+    actorError.value = 'Please select an option for % of.';
+    actorGood.value = '';
+    isValid = false;
+  } else {
+    actorError.value = '';
+    actorGood.value = 'Looks good';
+  }
 
-const onSubmit = (event) => {
-  event.preventDefault();
-  alert(JSON.stringify(form));
+  // Validate Condition
+  if (!form.Condition) {
+    conditionError.value = 'Please select an option for That.';
+    conditionGood.value = '';
+    isValid = false;
+  } else {
+    conditionError.value = '';
+    conditionGood.value = 'Looks good';
+  }
 
-  // Navigate to the result page with the form data
-  router.push({
-    name: 'result',
-    params: { form: JSON.stringify(form) },
-  });
+  // Validate Date if OptionalDate is checked
+  if (form.OptionalDate && !form.Date) {
+    dateError.value = 'Please select a date.';
+    dateGood.value = ''
+    isValid = false;
+  } else {
+    dateError.value = '';
+    dateGood.value = 'Looks good'
+  }
+
+  return isValid;
+};
+
+// onSubmit function to handle how form submission passes values and navigates to page
+const onSubmit = async (event) => {
+  event.preventDefault(); // prevents default values and behaviors of form
+  await nextTick();
+  if (validateForm()) {
+    alert(JSON.stringify(form)); // popup alert showing that values from form were successfully submitted (will be removed)
+
+    // navigate to the result page with the form data submitted
+    await router.push({
+      name: 'result',
+      params: {form: JSON.stringify(form)},
+    });
+  }
 }
-// const onSubmit = (event) => {
-//   event.preventDefault()
-//
-//
-//   // alert(JSON.stringify(form))
-//   // window.location.href = 'https://api.revmetrix.io/api/Test/TestTime'
-// }
 </script>
 
 <template>
   <div class="page">
-    <form @submit="onSubmit" v-if="show">
+    <BForm @submit="onSubmit" v-if="show" :novalidate="true" :validated="true" >
       <BInputGroup class="mt-3">
         <template #prepend>
-          <BInputGroupText><strong class="text-primary inputGrpPre">Shot Data: </strong></BInputGroupText>
+          <BInputGroupText><strong class="text-primary inputGrpPre">% of: </strong></BInputGroupText>
         </template>
-        <BFormSelect v-model="form.ShotData" :options="options1" size="sm" class="mt-lg dropStyle" />
+        <BFormSelect v-model="form.Actor" :options="actorOptions" size="sm" class="mt-lg dropStyle" />
       </BInputGroup>
+      <div v-if="actorError" class="text-danger">{{ actorError }}</div>
+      <div v-if="actorGood" class="text-success">{{ actorGood }}</div>
       <BInputGroup class="mt-3">
         <template #prepend>
-          <BInputGroupText><strong class="text-primary inputGrpPre">Game:  </strong></BInputGroupText>
+          <BInputGroupText><strong class="text-primary inputGrpPre">That:  </strong></BInputGroupText>
         </template>
-        <BFormSelect v-model="form.GameNumber" :options="options2" size="sm" class="mt-lg dropStyle" />
+        <BFormSelect v-model="form.Condition" :options="conditionOptions" size="sm" class="mt-lg dropStyle" />
       </BInputGroup>
-      <BInputGroup class="mt-3">
+      <div v-if="conditionError" class="text-danger">{{ conditionError }}</div>
+      <div v-if="conditionGood" class="text-success">{{ conditionGood }}</div>
+      <BInputGroup class="mt-3" style="background: white; border-radius: 4px">
         <template #prepend>
-          <BInputGroupText><strong class="text-primary inputGrpPre">Session? </strong></BInputGroupText>
+          <BInputGroupText><strong class="text-primary inputGrpPre">Date?</strong></BInputGroupText>
         </template>
-        <BFormSelect v-model="form.Session" :options="options3" size="sm" class="mt-lg dropStyle" />
+        <BFormCheckbox v-model="form.OptionalDate" size="sm" class="mt-lg checkbox" />
       </BInputGroup>
-      <BInputGroup class="mt-3">
+      <BInputGroup class="mt-3" v-if="form.OptionalDate">
         <template #prepend>
           <BInputGroupText><strong class="text-primary inputGrpPre">Date: </strong></BInputGroupText>
         </template>
@@ -99,17 +126,17 @@ const onSubmit = (event) => {
             :upper-limit="to"
             :lower-limit="from"
             :clearable="true"
+            placeholder="2023-08-15"
             class="dateInput">
+          <template v-slot:clear="{ onClear }">
+            <button type="button" @click="onClear" class="clearButton">x</button>
+          </template>
         </datepicker>
       </BInputGroup>
-      <BInputGroup class="mt-3">
-        <template #prepend>
-          <BInputGroupText><strong class="text-primary inputGrpPre">Bowler: </strong></BInputGroupText>
-        </template>
-        <BFormSelect v-model="form.Bowler" :options="options5" size="sm" class="mt-lg dropStyle" />
-      </BInputGroup>
-      <BButton type="submit" style="margin-top:2%;" variant="success">Button</BButton>
-    </form>
+      <div v-if="dateError" class="text-danger">{{ dateError }}</div>
+      <div v-if="dateGood && form.OptionalDate && form.Date" class="text-success">{{ dateGood }}</div>
+      <BButton type="submit" style="margin-top:3%;" variant="success">Submit</BButton>
+    </BForm>
   </div>
 </template>
 
@@ -128,12 +155,53 @@ const onSubmit = (event) => {
   font-weight: bold !important;
   background: whitesmoke;
 }
+.checkbox {
+  margin-left: 25% !important;
+  margin-top: 30% !important;
+  font-size: 18px !important;
+}
 .dateInput {
+  display: inline-block !important;
+  text-align: center !important;
+  width: 100% !important;
+  padding: 3% !important;
   color: rgb(78,113,170) !important;
   font-weight: bold !important;
-  background: whitesmoke;
+  background: whitesmoke !important;
   text-decoration-color: #0a3622;
-  border: 0;
+  border: none !important;
+  position: relative;
+}
+.clearButton {
+  padding-top: 2% !important;
+  padding-bottom: 2% !important;
+  color: red !important;
+  font-weight: bold !important;
+  background: whitesmoke !important;
+  border: none !important;
+  margin-right: 1em !important;
+}
+.v3dp__input_wrapper {
+  width: 120% !important; /* Fill the width */
+  padding: 0 !important;
+  margin: 0 !important;
+}
+.v3dp__datepicker {
+  width: 40% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+.v3dp__clearable {
+  position: absolute;
+  right: 40%; /* Adjust as needed for spacing inside the input field */
+  top: 50%;
+  transform: translateY(-50%) translateX(160%);
+  z-index: 2; /* Ensure it's above the input field */
+}
+/* Override any inline styles that may be passed */
+.dateInput[v-model="form.Date"][style] {
+  width: 100% !important;
+  padding: 0 !important;
 }
 </style>
 

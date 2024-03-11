@@ -8,8 +8,12 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     BButton: typeof import('bootstrap-vue-next')['BButton']
+    BForm: typeof import('bootstrap-vue-next')['BForm']
+    BFormCheckbox: typeof import('bootstrap-vue-next')['BFormCheckbox']
     BFormSelect: typeof import('bootstrap-vue-next')['BFormSelect']
     BInputGroup: typeof import('bootstrap-vue-next')['BInputGroup']
+    BInputGroupAppend: typeof import('bootstrap-vue-next')['BInputGroupAppend']
+    BInputGroupPrepend: typeof import('bootstrap-vue-next')['BInputGroupPrepend']
     BInputGroupText: typeof import('bootstrap-vue-next')['BInputGroupText']
     FormResults: typeof import('./src/components/FormResults.vue')['default']
     HomeTitle: typeof import('./src/components/HomeTitle.vue')['default']
