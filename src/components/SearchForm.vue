@@ -192,11 +192,11 @@ const onSubmit = async (event) => {
   margin: 0 !important;
 }
 .v3dp__clearable {
-  position: absolute;
-  right: 40%; /* Adjust as needed for spacing inside the input field */
-  top: 50%;
-  transform: translateY(-50%) translateX(140%);
-  z-index: 2; /* Ensure it's above the input field */
+  position: absolute !important;
+  right: 40% !important; /* Adjust as needed for spacing inside the input field */
+  top: 50% !important;
+  transform: translateY(-50%) translateX(140%) !important;
+  z-index: 2 !important; /* Ensure it's above the input field */
 }
 /* Override any inline styles that may be passed */
 .dateInput[v-model="form.Date"][style] {
