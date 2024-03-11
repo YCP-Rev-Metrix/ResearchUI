@@ -81,12 +81,12 @@ const onSubmit = async (event) => {
   event.preventDefault(); // prevents default values and behaviors of form
   await nextTick();
   if (validateForm()) {
-    alert(JSON.stringify(form)); // popup alert showing that values from form were successfully submitted (will be removed)
+    // alert(JSON.stringify(form)); // popup alert showing that values from form were successfully submitted (will be removed)
 
     // navigate to the result page with the form data submitted
     await router.push({
       name: 'result',
-      params: {form: JSON.stringify(form)},
+      query: { formData: JSON.stringify(form) },
     });
   }
 }
@@ -143,7 +143,7 @@ const onSubmit = async (event) => {
 <style>
 .page {
   width: 80%;
-  margin: 2% auto auto;
+  margin: 5% auto auto;
 }
 .inputGrpPre {
   background: whitesmoke !important;
