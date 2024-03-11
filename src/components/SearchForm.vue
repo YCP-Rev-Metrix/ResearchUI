@@ -195,7 +195,7 @@ const onSubmit = async (event) => {
   position: absolute !important;
   right: 40% !important; /* Adjust as needed for spacing inside the input field */
   top: 50% !important;
-  transform: translateY(-50%) translateX(140%) !important;
+  transform: translateY(-50%) translateX(160%) !important;
   z-index: 2 !important; /* Ensure it's above the input field */
 }
 /* Override any inline styles that may be passed */
