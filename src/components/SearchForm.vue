@@ -1,9 +1,10 @@
-<script setup lang="ts">
+<script setup lang="js">
 // imports for vue functions, router, and datepicker package
 import {reactive, ref, nextTick, watch} from "vue";
 import Datepicker from "vue3-datepicker"
 import { useRouter } from 'vue-router';
 import axios from "axios";
+import { useApiStore } from '@/stores/useApiStore';
 
 // reactive variable for storing values in fields of the form
 const form = reactive({
@@ -89,38 +90,21 @@ const validateForm = () => {
   return isValid;
 };
 
-//
-
 // onSubmit function to handle how form submission passes values and navigates to page
 const onSubmit = async (event) => {
-  event.preventDefault(); // prevents default values and behaviors of form
+  // prevents default values and behaviors of form
+  event.preventDefault();
   await nextTick();
   if (validateForm()) {
-    //alert(JSON.stringify(form)); // popup alert showing that values from form were successfully submitted (will be removed)
-
     try {
-      // Using Axios to fetch data from an endpoint
-      const response = await axios({
-        method: 'get',
-        url: 'https://api.revmetrix.io/api/user/getusers',
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*', // This is typically set on the server, not client-side
-          // 'Authorization': 'Bearer your-auth-token', // if you need authorization
-        },
-      });
+      // use the store to set API data
+      const apiStore = useApiStore();
+      await apiStore.setApiData('https://api.revmetrix.io/api/user/getusers');
 
-      // Now response.data contains the response body
-      console.log(response.data);
-
-      // navigate to the result page with the form data submitted
-      await router.push({
-        name: 'result',
-        query: { apiData: JSON.stringify(response.data) },
-      });
+      // navigate without the query parameter
+      await router.push({ name: 'result' });
     } catch (error) {
       console.error('Fetching data failed:', error);
-      // Handle errors, for example, show an alert or a message to the user
       alert("Data could not be retrieved.")
     }
   }

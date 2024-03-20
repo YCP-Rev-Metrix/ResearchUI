@@ -1,45 +1,30 @@
-<script setup lang="ts">
-import { useRoute } from 'vue-router';
-import { ref, onMounted, computed } from 'vue';
+<script setup lang="js">
+import { onMounted } from 'vue';
+import { useApiStore } from '@/stores/useApiStore';
 
-type UserData = { firstname: string; lastname: string }; // Define the expected structure
-const route = useRoute();
-const apiData = ref<UserData[]>([]);
+const endpointData = useApiStore().apiData;
 
 onMounted(() => {
-  console.log('Route state at mounted:', route.query);
-  // Check if apiData exists and is a string before parsing
-  if (route.query.apiData && typeof route.query.apiData === 'string') {
-    try {
-      const parsedData = JSON.parse(route.query.apiData);
-      // Validate parsed data is an array
-      if (Array.isArray(parsedData)) {
-        apiData.value = parsedData;
-      }
-    } catch (error) {
-      console.error('Error parsing apiData:', error);
-      apiData.value = [];
-    }
+  console.log('Received apiData:', endpointData);
+  if (endpointData.length > 0) {
+    console.log('First item structure:', endpointData[0]);
+  } else {
+    console.log("Data not available yet.");
   }
-  console.log('Received apiData:', apiData.value);
 });
 
-const results = computed(() => {
-  if (apiData.value && apiData.value.length > 0) {
-    return {
-      data: apiData.value.map(user => `${user.firstname} ${user.lastname}`).join('; ') || 'Not provided',
-    };
-  } else {
-    return {
-      data: 'No user data provided or unexpected data structure.',
-    };
+// Loop for pulling all values of each field of the request
+// Will be used with table implementation for display if implemented
+for (let i = 0; i < endpointData.length; i ++) {
+  for (const key in endpointData[i]) {
+    console.log(key, endpointData[i][key]);
   }
-});
+}
 </script>
 
 <template>
   <div class="page">
-    <div class="result" v-for="(user, index) in apiData" :key="index">
+    <div class="result" v-for="(user, index) in endpointData" :key="index">
       <BAlert :model-value="true" variant="dark" class="piece1">Name:</BAlert>
       <BAlert :model-value="true" variant="info" class="piece2">{{ user.firstname }} {{ user.lastname }}</BAlert>
     </div>
