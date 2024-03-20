@@ -3,6 +3,7 @@
 import {reactive, ref, nextTick} from "vue";
 import Datepicker from "vue3-datepicker"
 import { useRouter } from 'vue-router';
+import axios from "axios";
 
 // Define state for validation messages
 const actorError = ref('');
@@ -76,18 +77,40 @@ const validateForm = () => {
   return isValid;
 };
 
+//
+
 // onSubmit function to handle how form submission passes values and navigates to page
 const onSubmit = async (event) => {
   event.preventDefault(); // prevents default values and behaviors of form
   await nextTick();
   if (validateForm()) {
-    // alert(JSON.stringify(form)); // popup alert showing that values from form were successfully submitted (will be removed)
+    //alert(JSON.stringify(form)); // popup alert showing that values from form were successfully submitted (will be removed)
 
-    // navigate to the result page with the form data submitted
-    await router.push({
-      name: 'result',
-      query: { formData: JSON.stringify(form) },
-    });
+    try {
+      // Using Axios to fetch data from an endpoint
+      const response = await axios({
+        method: 'get',
+        url: 'https://api.revmetrix.io/api/user/getusers',
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*', // This is typically set on the server, not client-side
+          // 'Authorization': 'Bearer your-auth-token', // if you need authorization
+        },
+      });
+
+      // Now response.data contains the response body
+      console.log(response.data);
+
+      // navigate to the result page with the form data submitted
+      await router.push({
+        name: 'result',
+        query: { apiData: JSON.stringify(response.data) },
+      });
+    } catch (error) {
+      console.error('Fetching data failed:', error);
+      // Handle errors, for example, show an alert or a message to the user
+      alert("Data could not be retrieved.")
+    }
   }
 }
 </script>
@@ -143,7 +166,7 @@ const onSubmit = async (event) => {
 <style>
 .page {
   width: 80%;
-  margin: 5% auto auto;
+  margin: 2% auto auto;
 }
 .inputGrpPre {
   background: whitesmoke !important;
@@ -192,11 +215,11 @@ const onSubmit = async (event) => {
   margin: 0 !important;
 }
 .v3dp__clearable {
-  position: absolute !important;
-  right: 40% !important; /* Adjust as needed for spacing inside the input field */
-  top: 50% !important;
-  transform: translateY(-50%) translateX(160%) !important;
-  z-index: 2 !important; /* Ensure it's above the input field */
+  position: absolute;
+  right: 40%; /* Adjust as needed for spacing inside the input field */
+  top: 50%;
+  transform: translateY(-50%) translateX(160%);
+  z-index: 2; /* Ensure it's above the input field */
 }
 /* Override any inline styles that may be passed */
 .dateInput[v-model="form.Date"][style] {

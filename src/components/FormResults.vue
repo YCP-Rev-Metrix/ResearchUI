@@ -1,36 +1,47 @@
 <script setup lang="ts">
-import { defineProps, computed } from 'vue';
+import { useRoute } from 'vue-router';
+import { ref, onMounted, computed } from 'vue';
 
-const props = defineProps({
-  results: {
-    type: Object,
-    default: () => ({}),
-  },
+type UserData = { firstname: string; lastname: string }; // Define the expected structure
+const route = useRoute();
+const apiData = ref<UserData[]>([]);
+
+onMounted(() => {
+  console.log('Route state at mounted:', route.query);
+  // Check if apiData exists and is a string before parsing
+  if (route.query.apiData && typeof route.query.apiData === 'string') {
+    try {
+      const parsedData = JSON.parse(route.query.apiData);
+      // Validate parsed data is an array
+      if (Array.isArray(parsedData)) {
+        apiData.value = parsedData;
+      }
+    } catch (error) {
+      console.error('Error parsing apiData:', error);
+      apiData.value = [];
+    }
+  }
+  console.log('Received apiData:', apiData.value);
 });
 
-const resultDetails = computed(() => {
-  let formattedDate = props.results.Date ? props.results.Date.split('T')[0] : 'Not provided';
-  return {
-    Actor: props.results.Actor || 'Not provided',
-    Condition: props.results.Condition || 'Not provided',
-    Date: formattedDate
-  };
+const results = computed(() => {
+  if (apiData.value && apiData.value.length > 0) {
+    return {
+      data: apiData.value.map(user => `${user.firstname} ${user.lastname}`).join('; ') || 'Not provided',
+    };
+  } else {
+    return {
+      data: 'No user data provided or unexpected data structure.',
+    };
+  }
 });
 </script>
 
 <template>
   <div class="page">
-    <div class="result">
-      <BAlert :model-value="true" variant="dark" class="piece1">Actor:</BAlert>
-      <BAlert :model-value="true" variant="info" class="piece2">{{ resultDetails.Actor }}</BAlert>
-    </div>
-    <div class="result">
-      <BAlert :model-value="true" variant="dark" class="piece1">Condition:</BAlert>
-      <BAlert :model-value="true" variant="info" class="piece2">{{ resultDetails.Condition }}</BAlert>
-    </div>
-    <div class="result">
-      <BAlert :model-value="true" variant="dark" class="piece1">Date:</BAlert>
-      <BAlert :model-value="true" variant="info" class="piece2">{{ resultDetails.Date }}</BAlert>
+    <div class="result" v-for="(user, index) in apiData" :key="index">
+      <BAlert :model-value="true" variant="dark" class="piece1">Name:</BAlert>
+      <BAlert :model-value="true" variant="info" class="piece2">{{ user.firstname }} {{ user.lastname }}</BAlert>
     </div>
   </div>
 </template>
