@@ -1,9 +1,17 @@
 <script setup lang="ts">
 // imports for vue functions, router, and datepicker package
-import {reactive, ref, nextTick} from "vue";
+import {reactive, ref, nextTick, watch} from "vue";
 import Datepicker from "vue3-datepicker"
 import { useRouter } from 'vue-router';
 import axios from "axios";
+
+// reactive variable for storing values in fields of the form
+const form = reactive({
+  Actor: null,
+  Condition: null,
+  OptionalDate: false,
+  Date: null
+})
 
 // Define state for validation messages
 const actorError = ref('');
@@ -24,20 +32,24 @@ const actorOptions = [
   {value: 1, text: 'First Shots'},
   {value: 2, text: 'Pocket Hits'}
 ]
-const conditionOptions = [
-  {value: null, text: 'Please select an option'},
-  {value: 1, text: 'Hit the pocket'},
-  {value: 2, text: 'Resulted in Strikes'},
-  {value: 3, text: 'Resulted in one remaining pin of pins 4, 7, 8, 9 & 10'}
-]
+const conditionOptionsMap = {
+  null: [{ value: null, text: 'Please select an option' }],
+  1: [{ value: null, text: 'Please select an option' }, { value: 1, text: 'Hit the pocket' }],
+  2: [
+    { value: null, text: 'Please select an option' },
+    { value: 2, text: 'Resulted in Strikes' },
+    { value: 3, text: 'Resulted in one remaining pin of pins 4, 7, 8, 9 & 10' }
+  ],
+};
 
-// reactive variable for storing values in fields of the form
-const form = reactive({
-  Actor: null,
-  Condition: null,
-  OptionalDate: false,
-  Date: null
-})
+const conditionOptions = ref([...conditionOptionsMap[null]]);
+
+watch(() => form.Actor, (newActor) => {
+  conditionOptions.value = [...conditionOptionsMap[newActor]];
+  form.Condition = null; // Reset the condition if the actor changes
+});
+
+
 const show = ref(true) // create reactive ref object for use in form
 const router = useRouter(); // router variable for use in navigating to next page on form submission
 
