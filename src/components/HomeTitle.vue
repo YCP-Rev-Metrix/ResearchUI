@@ -1,4 +1,5 @@
 <script setup>
+// define props for passing in welcome message
 defineProps({
   msg: {
     type: String,
@@ -11,7 +12,7 @@ defineProps({
   <div class="greetings">
     <h1 class="blue">{{ msg }}</h1>
     <h3>
-      The official research data provider for the
+      The official data provider for the
       <a href="https://github.com/YCP-Rev-Metrix/" target="_blank" rel="noopener">RevMetrix</a> project's research data
     </h3>
   </div>

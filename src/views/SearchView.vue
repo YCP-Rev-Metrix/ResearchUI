@@ -1,4 +1,5 @@
 <script setup>
+// imports
 import SearchForm from '../components/SearchForm.vue'
 </script>
 

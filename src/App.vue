@@ -1,4 +1,5 @@
 <script setup>
+// imports
 import { RouterLink, RouterView } from 'vue-router'
 import HomeTitle from "@/components/HomeTitle.vue";
 </script>
@@ -6,10 +7,8 @@ import HomeTitle from "@/components/HomeTitle.vue";
 <template>
   <header>
     <img alt="RevMetrix Logo" class="logo" src="@/assets/logo.png" width="125" height="125" />
-
     <div class="wrapper">
       <HomeTitle msg="RevMetrix Research UI" />
-
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/search">Search</RouterLink>
