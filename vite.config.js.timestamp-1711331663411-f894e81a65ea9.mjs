@@ -1,0 +1,33 @@
+// vite.config.js
+import { fileURLToPath, URL } from "node:url";
+import { defineConfig } from "file:///C:/Users/robertWood/OneDrive%20-%20ycp.edu/Documents/Coding/Projects/RevMetrix/ResearchUI/node_modules/vite/dist/node/index.js";
+import vue from "file:///C:/Users/robertWood/OneDrive%20-%20ycp.edu/Documents/Coding/Projects/RevMetrix/ResearchUI/node_modules/@vitejs/plugin-vue/dist/index.mjs";
+import Components from "file:///C:/Users/robertWood/OneDrive%20-%20ycp.edu/Documents/Coding/Projects/RevMetrix/ResearchUI/node_modules/unplugin-vue-components/dist/vite.js";
+import { BootstrapVueNextResolver } from "file:///C:/Users/robertWood/OneDrive%20-%20ycp.edu/Documents/Coding/Projects/RevMetrix/ResearchUI/node_modules/unplugin-vue-components/dist/resolvers.js";
+import VueDevTools from "file:///C:/Users/robertWood/OneDrive%20-%20ycp.edu/Documents/Coding/Projects/RevMetrix/ResearchUI/node_modules/vite-plugin-vue-devtools/dist/vite.mjs";
+import nightwatchPlugin from "file:///C:/Users/robertWood/OneDrive%20-%20ycp.edu/Documents/Coding/Projects/RevMetrix/ResearchUI/node_modules/vite-plugin-nightwatch/index.js";
+var __vite_injected_original_import_meta_url = "file:///C:/Users/robertWood/OneDrive%20-%20ycp.edu/Documents/Coding/Projects/RevMetrix/ResearchUI/vite.config.js";
+var vite_config_default = defineConfig({
+  plugins: [
+    vue(),
+    nightwatchPlugin(),
+    VueDevTools(),
+    Components({
+      resolvers: [BootstrapVueNextResolver()]
+    })
+  ],
+  server: {
+    host: "0.0.0.0",
+    port: 8081
+    // Change this to the desired port number
+  },
+  resolve: {
+    alias: {
+      "@": fileURLToPath(new URL("./src", __vite_injected_original_import_meta_url))
+    }
+  }
+});
+export {
+  vite_config_default as default
+};
+//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsidml0ZS5jb25maWcuanMiXSwKICAic291cmNlc0NvbnRlbnQiOiBbImNvbnN0IF9fdml0ZV9pbmplY3RlZF9vcmlnaW5hbF9kaXJuYW1lID0gXCJDOlxcXFxVc2Vyc1xcXFxyb2JlcnRXb29kXFxcXE9uZURyaXZlIC0geWNwLmVkdVxcXFxEb2N1bWVudHNcXFxcQ29kaW5nXFxcXFByb2plY3RzXFxcXFJldk1ldHJpeFxcXFxSZXNlYXJjaFVJXCI7Y29uc3QgX192aXRlX2luamVjdGVkX29yaWdpbmFsX2ZpbGVuYW1lID0gXCJDOlxcXFxVc2Vyc1xcXFxyb2JlcnRXb29kXFxcXE9uZURyaXZlIC0geWNwLmVkdVxcXFxEb2N1bWVudHNcXFxcQ29kaW5nXFxcXFByb2plY3RzXFxcXFJldk1ldHJpeFxcXFxSZXNlYXJjaFVJXFxcXHZpdGUuY29uZmlnLmpzXCI7Y29uc3QgX192aXRlX2luamVjdGVkX29yaWdpbmFsX2ltcG9ydF9tZXRhX3VybCA9IFwiZmlsZTovLy9DOi9Vc2Vycy9yb2JlcnRXb29kL09uZURyaXZlJTIwLSUyMHljcC5lZHUvRG9jdW1lbnRzL0NvZGluZy9Qcm9qZWN0cy9SZXZNZXRyaXgvUmVzZWFyY2hVSS92aXRlLmNvbmZpZy5qc1wiOy8vIGltcG9ydHNcclxuaW1wb3J0IHsgZmlsZVVSTFRvUGF0aCwgVVJMIH0gZnJvbSAnbm9kZTp1cmwnXHJcbmltcG9ydCB7IGRlZmluZUNvbmZpZyB9IGZyb20gJ3ZpdGUnXHJcbmltcG9ydCB2dWUgZnJvbSAnQHZpdGVqcy9wbHVnaW4tdnVlJ1xyXG5pbXBvcnQgQ29tcG9uZW50cyBmcm9tICd1bnBsdWdpbi12dWUtY29tcG9uZW50cy92aXRlJ1xyXG5pbXBvcnQge0Jvb3RzdHJhcFZ1ZU5leHRSZXNvbHZlcn0gZnJvbSAndW5wbHVnaW4tdnVlLWNvbXBvbmVudHMvcmVzb2x2ZXJzJ1xyXG5pbXBvcnQgVnVlRGV2VG9vbHMgZnJvbSAndml0ZS1wbHVnaW4tdnVlLWRldnRvb2xzJ1xyXG5pbXBvcnQgbmlnaHR3YXRjaFBsdWdpbiBmcm9tICd2aXRlLXBsdWdpbi1uaWdodHdhdGNoJ1xyXG5cclxuZXhwb3J0IGRlZmF1bHQgZGVmaW5lQ29uZmlnKHtcclxuICBwbHVnaW5zOiBbXHJcbiAgICB2dWUoKSxcclxuICAgIG5pZ2h0d2F0Y2hQbHVnaW4oKSxcclxuICAgIFZ1ZURldlRvb2xzKCksXHJcbiAgICBDb21wb25lbnRzKHtcclxuICAgICAgcmVzb2x2ZXJzOiBbQm9vdHN0cmFwVnVlTmV4dFJlc29sdmVyKCldLFxyXG4gICAgfSksXHJcbiAgXSxcclxuICBzZXJ2ZXI6IHtcclxuICAgIGhvc3Q6IFwiMC4wLjAuMFwiLFxyXG4gICAgcG9ydDogODA4MSwgLy8gQ2hhbmdlIHRoaXMgdG8gdGhlIGRlc2lyZWQgcG9ydCBudW1iZXJcclxuICB9LFxyXG4gIHJlc29sdmU6IHtcclxuICAgIGFsaWFzOiB7XHJcbiAgICAgICdAJzogZmlsZVVSTFRvUGF0aChuZXcgVVJMKCcuL3NyYycsIGltcG9ydC5tZXRhLnVybCkpXHJcbiAgICB9XHJcbiAgfVxyXG59KVxyXG4iXSwKICAibWFwcGluZ3MiOiAiO0FBQ0EsU0FBUyxlQUFlLFdBQVc7QUFDbkMsU0FBUyxvQkFBb0I7QUFDN0IsT0FBTyxTQUFTO0FBQ2hCLE9BQU8sZ0JBQWdCO0FBQ3ZCLFNBQVEsZ0NBQStCO0FBQ3ZDLE9BQU8saUJBQWlCO0FBQ3hCLE9BQU8sc0JBQXNCO0FBUHNRLElBQU0sMkNBQTJDO0FBU3BWLElBQU8sc0JBQVEsYUFBYTtBQUFBLEVBQzFCLFNBQVM7QUFBQSxJQUNQLElBQUk7QUFBQSxJQUNKLGlCQUFpQjtBQUFBLElBQ2pCLFlBQVk7QUFBQSxJQUNaLFdBQVc7QUFBQSxNQUNULFdBQVcsQ0FBQyx5QkFBeUIsQ0FBQztBQUFBLElBQ3hDLENBQUM7QUFBQSxFQUNIO0FBQUEsRUFDQSxRQUFRO0FBQUEsSUFDTixNQUFNO0FBQUEsSUFDTixNQUFNO0FBQUE7QUFBQSxFQUNSO0FBQUEsRUFDQSxTQUFTO0FBQUEsSUFDUCxPQUFPO0FBQUEsTUFDTCxLQUFLLGNBQWMsSUFBSSxJQUFJLFNBQVMsd0NBQWUsQ0FBQztBQUFBLElBQ3REO0FBQUEsRUFDRjtBQUNGLENBQUM7IiwKICAibmFtZXMiOiBbXQp9Cg==

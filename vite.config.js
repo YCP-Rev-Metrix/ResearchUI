@@ -4,12 +4,14 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import Components from 'unplugin-vue-components/vite'
 import {BootstrapVueNextResolver} from 'unplugin-vue-components/resolvers'
+import VueDevTools from 'vite-plugin-vue-devtools'
 import nightwatchPlugin from 'vite-plugin-nightwatch'
 
 export default defineConfig({
   plugins: [
     vue(),
     nightwatchPlugin(),
+    VueDevTools(),
     Components({
       resolvers: [BootstrapVueNextResolver()],
     }),

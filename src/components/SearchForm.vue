@@ -114,9 +114,7 @@ const onSubmit = async (event) => {
       // sets variable for the useApiStore for endpoint calling
       const apiStore1 = useApiStore();
       // call endpoint and send request through api store
-      await apiStore1.setApiData('https://api.revmetrix.io/api/user/getusers'); /* NEED TO MAKE THIS A VARIABLE */
-      const apiStore2 = useApiStore();
-      await apiStore2.setApiData('https://api.revmetrix.io/api/user/getusers'); /* NEED TO MAKE THIS A VARIABLE */
+      await apiStore1.setApiData('https://api.revmetrix.io/api/getusers'); /* NEED TO MAKE THIS A VARIABLE */
 
       // navigate to the result page
       await router.push({ name: 'result' });
