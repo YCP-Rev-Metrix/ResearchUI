@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   researchui:
-    image: robwoodd/researchui
+    image: revmetrixproject/researchui
     build:
       context: .
       dockerfile: Dockerfile
